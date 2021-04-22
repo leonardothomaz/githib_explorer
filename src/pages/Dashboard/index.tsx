@@ -19,14 +19,13 @@ const Dashboard: React.FC = () => {
     const [newRepo, setNewRepo] = useState('');
     const [inputError, setInputError] = useState('');
     const [repositories, setRepositories] = useState<Repository[]>(() => {
-        const storageRepositories = localStorage.getItem(
+        const storagedRepositories = localStorage.getItem(
             '@GithubExplorer:repositories',
         );
 
-        if (storageRepositories) {
-            return JSON.parse(storageRepositories);
+        if (storagedRepositories) {
+            return JSON.parse(storagedRepositories);
         }
-
         return [];
     });
 
@@ -42,7 +41,7 @@ const Dashboard: React.FC = () => {
     ): Promise<void> {
         event.preventDefault();
         if (!newRepo) {
-            setInputError('Digite o autor/nome do repositório.');
+            setInputError('Digite o autor/nome do repositório');
             return;
         }
 
@@ -53,7 +52,7 @@ const Dashboard: React.FC = () => {
             setRepositories([...repositories, repository]);
             setNewRepo('');
             setInputError('');
-        } catch (err) {
+        } catch {
             setInputError('Erro na busca por este repositório');
         }
     }
@@ -78,7 +77,7 @@ const Dashboard: React.FC = () => {
                 {repositories.map(repository => (
                     <Link
                         key={repository.full_name}
-                        to={`/repository/${repository.full_name}`}
+                        to={`/repositories/${repository.full_name}`}
                     >
                         <img
                             src={repository.owner.avatar_url}
